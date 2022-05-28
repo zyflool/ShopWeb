@@ -1,0 +1,11 @@
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.DAL\bin\Release\ShopWeb.DAL.dll
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.DAL\bin\Release\ShopWeb.DAL.pdb
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.DAL\bin\Release\ShopWeb.Models.dll
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.DAL\bin\Release\ShopWeb.Utils.dll
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.DAL\bin\Release\ShopWeb.Models.pdb
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.DAL\bin\Release\ShopWeb.Utils.pdb
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.DAL\obj\Release\ShopWeb.DAL.csproj.AssemblyReference.cache
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.DAL\obj\Release\ShopWeb.DAL.csproj.CoreCompileInputs.cache
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.DAL\obj\Release\ShopWeb.DAL.csproj.CopyComplete
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.DAL\obj\Release\ShopWeb.DAL.dll
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.DAL\obj\Release\ShopWeb.DAL.pdb

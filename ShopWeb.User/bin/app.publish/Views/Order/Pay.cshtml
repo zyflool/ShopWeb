@@ -1,0 +1,35 @@
+﻿@using ShopWeb.Models
+@model Order
+@{
+    ViewBag.Title = "订单支付";
+}
+
+<h2>订单支付</h2>
+<label style="color:red;font-size:20px;font-weight:500;text-align:center;display:block;margin-left:auto;margin-right:auto;">@Model.Cost 元</label>
+
+<img title="付款二维码" style="width: 300px; height: 300px;margin-bottom:20px; margin-left: auto; margin-right: auto; background-color: bisque; display: block;" />
+
+
+@using (Html.BeginForm("Pay", "Order", FormMethod.Post, htmlAttributes: new { @style="display:none;"}))
+{
+<div>
+    @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control"} })
+    <input type="submit" id="success">
+</div>
+}
+
+
+<div style="margin-left:auto;margin-right:auto;display:block;width:fit-content;">
+    <a class="btn btn-default" href="/Order" style="font-weight:600;width:130px;">取消付款</a>
+    <a class="btn btn-default" href="#" id="pay_success_a" style="margin-left:50px;font-weight:600;width:130px;">付款成功</a>
+</div>
+
+<script>
+    var successRealA = document.getElementById('pay_success_a')
+    var successSubmit = document.getElementById('success')
+    console.log(successRealA)
+    console.log(successSubmit)
+    successRealA.onclick = function () {
+        successSubmit.click();
+    }
+</script>

@@ -1,0 +1,198 @@
+﻿@using ShopWeb.Models;
+@model List<Order>
+@{
+    ViewBag.Title = "订单";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int filter = ViewBag.Filter;
+}
+
+<script>
+    var orderTitleA = document.getElementById('title_order_action')
+    var goodsTitleA = document.getElementById('title_goods_action')
+    var cartTitleA = document.getElementById('title_cart_action')
+    var userTitleA = document.getElementById('title_user_action')
+
+    if (!orderTitleA.classList.contains('title-selected')) {
+        orderTitleA.classList.add('title-selected')
+        orderTitleA.style.color = '#fff'
+    }
+
+    if (goodsTitleA.classList.contains('title-selected')) {
+        var index = goodsTitleA.classList.item('title-selected')
+        goodsTitleA.classList.remove(index)
+    }
+    if (cartTitleA.classList.contains('title-selected')) {
+        var index = cartTitleA.classList.item('title-selected')
+        cartTitleA.classList.remove(index)
+    }
+    if (userTitleA.classList.contains('title-selected')) {
+        var index = userTitleA.classList.item('title-selected')
+        userTitleA.classList.remove(index)
+    }
+</script>
+
+<style>
+    .order-item-a, .order-item-a:hover, .order-item-a:focus, .order-item-a:after {
+        text-decoration: none;
+        color: black;
+    }
+
+    .no-data {
+        float: left;
+        width: 100%;
+        height: 300px;
+        background: url(../../Content/Images/nothing.png) no-repeat;
+        background-size: contain;
+        background-position: center center;
+        clear: both;
+    }
+
+    .filter-action, .filter-action:after {
+        text-decoration: none;
+        color: black;
+        font-size: 20px;
+        font-weight: 400;
+    }
+        .filter-action:hover, .filter-action:focus {
+            text-decoration: none;
+            color: black;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+    .filter-selected-action, .filter-selected-action:hover, .filter-selected-action:after, .filter-selected-action:focus {
+        text-decoration: none;
+        color: black;
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+</style>
+
+<h2>我的订单</h2>
+<div style="display:block;float:left;width:100%;" id="filters">
+    @Html.ActionLink("全部", "Index", "Order", new { filter = "4" }, htmlAttributes: new { @class = "filter-action" })
+    @Html.ActionLink("待付款", "Index", "Order", new { filter = "0" }, htmlAttributes: new { @class = "filter-action" })
+    @Html.ActionLink("待收货", "Index", "Order", new { filter = "1" }, htmlAttributes: new { @class = "filter-action" })
+    @Html.ActionLink("已取消", "Index", "Order", new { filter = "2" }, htmlAttributes: new { @class = "filter-action" })
+    @Html.ActionLink("已完成", "Index", "Order", new { filter = "3" }, htmlAttributes: new { @class = "filter-action" })
+</div>
+@if (Model == null || Model.Count <= 0)
+{
+    <span class="no-data"></span>
+    <h3 style="text-align:center;">没有找到数据</h3>
+}
+
+@if (Model != null && Model.Count > 0)
+{
+    <ul style="list-style-type: none; padding-inline-start: 0px; width: 100%; padding-left: 2%; padding-right: 2%">
+
+        @for (int i = 0; i < Model.Count; i++)
+        {
+
+            int sumCount = 0;
+            Model[i].GoodsList.ForEach(goods =>
+            {
+                sumCount += goods.Count;
+            });
+            string type = "";
+            switch (Model[i].Type)
+            {
+                case ((int)OrderType.SelfTake):
+                    type = "到店取货";
+                    break;
+                case ((int)OrderType.Deliverty):
+                    type = "上门配送";
+                    break;
+            }
+
+            string state = "";
+            switch (Model[i].State)
+            {
+                case Order.STATE_PAYED:
+                    state = "待收货";
+                    break;
+                case Order.STATE_CANCELED:
+                    state = "已取消";
+                    break;
+                case Order.STATE_FINISHED:
+                    state = "已完成";
+                    break;
+                case Order.STATE_INITIAL:
+                    state = "待付款";
+                    break;
+                default:
+                    state = "已取消";
+                    break;
+            }
+            <li>
+                <div style="width:100%;float:left">
+                    <hr style="width:100%;display:block;float:left" />
+                    <a class="order-item-a" href="Detail?order_id=@Model[i].Id">
+                        <div style="float:left">
+                            状态：<span>@state</span>
+                            <br />
+                            类型：<span>@type</span>
+                            <br />
+                            预计完成时间：<span>@Model[i].ScheduledTime</span>
+                            <br />
+                            @if (Model[i].RealTime < DateTime.Now)
+                            {
+                                <p>实际完成时间：<span>@Model[i].RealTime</span></p>
+                            }
+                            共<span>@sumCount</span>件商品
+                        </div>
+                        <div style="float:right">
+                            @if (Model[i].State != Order.STATE_CANCELED && Model[i].State != Order.STATE_FINISHED)
+                            {
+                                @Html.ActionLink("取消订单", "Cancel", "Order", new { order_id = Model[i].Id },
+                               htmlAttributes: new { @style = "margin-top:2px;margin-bottom:2px;width:80px;display:block;clear:both", @class = "btn btn-default" })
+
+                            }
+                            @if (Model[i].State == Order.STATE_INITIAL)
+                            {
+                                @Html.ActionLink("前往付款", "Pay", "Order", new { order_id = Model[i].Id },
+                               htmlAttributes: new { @style = "margin-top: 2px; margin-bottom: 2px; width: 80px; display: block; clear: both", @class = "btn btn-default" })
+                            }
+                        </div>
+                    </a>
+                </div>
+            </li>
+        }
+
+    </ul>
+}
+<div style="clear:both"></div>
+
+
+<script>
+    function changeSelectedFilter(filterIndex) {
+        var filtersD = document.getElementById('filters')
+        var filters = filtersD.getElementsByTagName('a')
+        for (var j = 0; j < filters.length; j++) {
+            if (j == filterIndex) {
+                if (!filters[j].classList.contains('filter-selected-action')) {
+                    filters[j].classList.add('filter-selected-action')
+                }
+                if (filters[j].classList.contains('filter-action')) {
+                    filters[j].classList.remove('filter-action')
+                }
+            } else {
+                if (filters[j].classList.contains('filter-selected-action')) {
+                    filters[j].classList.remove('filter-selected-action')
+                }
+                if (!filters[j].classList.contains('filter-action')) {
+                    filters[j].classList.add('filter-action')
+                }
+            }
+        }
+    }
+
+    var filter = parseInt('@filter')
+    var filterIndex
+    if (filter == 4)
+        filterIndex = 0
+    else filterIndex = filter + 1;
+    changeSelectedFilter(filterIndex)
+
+</script>

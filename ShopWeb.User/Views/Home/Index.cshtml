@@ -1,0 +1,170 @@
+﻿@using ShopWeb.Models
+@model List<GoodsShowModel>
+@{
+    ViewBag.Title = "首页";
+}
+
+<style>
+
+    .goods-section {
+        width: 20%;
+        padding-left: 2%;
+        padding-right: 2%;
+        display: block;
+        float: left;
+    }
+    .goods-a, .goods-a:hover, .goods-a:after, .goods-a:focus {
+        text-decoration:none;
+    }
+
+    .goods-div {
+        background-color: white;
+        width: 100%;
+        display: block;
+        float: left;
+    }
+
+        .goods-div:hover {
+            border-left-style: outset;
+            border-left-color: #efefef;
+            border-left-width: thin;
+            border-right-style: outset;
+            border-right-color: #efefef;
+            border-right-width: thin;
+            border-top-style: outset;
+            border-top-color: #efefef;
+            border-top-width: thin;
+            border-bottom-style: outset;
+            border-bottom-color: #efefef;
+            border-bottom-width: thin;
+            border-radius:3px;
+        }
+
+    .goods-img {
+        width: 100%;
+        padding-left: 3%;
+        padding-right: 3%;
+    }
+
+    .name-p {
+        color:black;
+        font-size:13px;
+        font-weight:500;
+    }
+
+    .price-label {
+        color:red;
+        font-size:14px;
+        font-weight:600;
+    }
+
+    .contact-title{
+        line-height:35px;
+        font-size:15px;
+        font-weight:600;
+    }
+
+    .contact-content {
+        line-height: 35px;
+        font-size: 13px;
+        font-weight: 400;
+        padding-left: 10px;
+    }
+
+</style>
+
+
+<div>
+
+    <div style="width:100%">
+
+    </div>
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <h2>近期热卖</h2>
+        <div style="width:90%;margin-left:5%;margin-right:5%">
+            <section style="width: 20%; padding-left: 2%; padding-right: 2%; display: block; float: left">
+                @if (Model[0] != null)
+                {
+                    <a class="goods-a" href="Goods/Detail?goods_id=@Model[0].Id">
+                        <div class="goods-div">
+                            <img src="data:image/jpeg;base64, @Model[0].ImagePath" class="goods-img" />
+                            <p class="name-p">@Model[0].Name</p>
+                            <lable class="price-label">&yen;@Model[0].Price</lable>
+                        </div>
+                    </a>
+                }
+            </section>
+            <section  class="goods-section">
+                @if (Model[1] != null)
+                {
+                    <a class="goods-a" href="Goods/Detail?goods_id=@Model[1].Id">
+                        <div class="goods-div">
+                            <img src="data:image/jpeg;base64, @Model[1].ImagePath" class="goods-img" />
+                            <p class="name-p">@Model[1].Name</p>
+                            <lable class="price-label">&yen;@Model[1].Price</lable>
+                        </div>
+                    </a>
+                }
+            </section>
+            <section class="goods-section">
+                @if (Model[2] != null)
+                {
+                    <a class="goods-a" href="Goods/Detail?goods_id=@Model[2].Id">
+                        <div class="goods-div">
+                            <img src="data:image/jpeg;base64, @Model[2].ImagePath" class="goods-img" />
+                            <p class="name-p">@Model[2].Name</p>
+                            <lable class="price-label">&yen;@Model[2].Price</lable>
+                        </div>
+                    </a>
+                }
+            </section>
+            <section class="goods-section">
+                @if (Model[3] != null)
+                {
+
+                    <a class="goods-a" href="Goods/Detail?goods_id=@Model[3].Id">
+                        <div class="goods-div">
+                            <img src="data:image/jpeg;base64, @Model[3].ImagePath" class="goods-img" />
+                            <p class="name-p">@Model[3].Name</p>
+                            <lable class="price-label">&yen;@Model[3].Price</lable>
+                        </div>
+                    </a>
+                }
+            </section>
+            <section class="goods-section">
+                @if (Model[4] != null)
+                {
+
+                    <a class="goods-a" href="Goods/Detail?goods_id=@Model[4].Id">
+                        <div class="goods-div">
+                            <img src="data:image/jpeg;base64, @Model[4].ImagePath" class="goods-img" />
+                            <p class="name-p">@Model[4].Name</p>
+                            <lable class="price-label">&yen;@Model[4].Price</lable>
+                        </div>
+                    </a>
+                }
+            </section>
+        </div>
+    }
+
+    <div style="clear:both"></div>
+        <h2>联系我们</h2>
+        <div style="width:100%;padding-left:10%;padding-right:10%;">
+            <table>
+                <tr>
+                    <td class="contact-title">联系电话：</td>
+                    <td class="contact-content">123123123123</td>
+                </tr>
+
+                <tr>
+                    <td class="contact-title">门店地址：</td>
+                    <td class="contact-content">XXX市XXX区XXX街道XXX路XXX号</td>
+                </tr>
+
+            </table>
+        </div>
+
+</div>
+<div style="clear:both"></div>

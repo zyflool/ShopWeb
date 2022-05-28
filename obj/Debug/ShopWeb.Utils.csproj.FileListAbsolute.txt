@@ -1,0 +1,2 @@
+C:\Users\86138\Desktop\code-repository\ShopWeb\obj\Debug\ShopWeb.Utils.csproj.AssemblyReference.cache
+C:\Users\86138\Desktop\code-repository\ShopWeb\obj\Debug\ShopWeb.Utils.csproj.CoreCompileInputs.cache

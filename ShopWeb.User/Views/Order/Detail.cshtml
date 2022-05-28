@@ -1,0 +1,179 @@
+﻿@using ShopWeb.Utils;
+@using ShopWeb.Models;
+@model OrderShowModel
+@{
+    ViewBag.Title = "订单详情";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // 处理商品列表
+    List<GoodsShowItemModel> goodsList = new List<GoodsShowItemModel>();
+    Model.GoodsList.ForEach(item =>
+    {
+        goodsList.Add(new GoodsShowItemModel()
+        {
+            GoodsShowModel = item.GoodsShowModel,
+            Count = item.Count
+        });
+    });
+
+    string type = "";
+    switch (Model.Type)
+    {
+        case ((int)OrderType.SelfTake):
+            type = "到店取货";
+            break;
+        case ((int)OrderType.Deliverty):
+            type = "上门配送";
+            break;
+    }
+
+    string state = "";
+    switch (Model.State)
+    {
+        case Order.STATE_PAYED:
+            state = "待收货";
+            break;
+        case Order.STATE_CANCELED:
+            state = "已取消";
+            break;
+        case Order.STATE_FINISHED:
+            state = "已完成";
+            break;
+        case Order.STATE_INITIAL:
+            state = "待付款";
+            break;
+        default:
+            state = "已取消";
+            break;
+    }
+}
+
+
+<style>
+
+    .label-title {
+        text-align: center;
+        display: block;
+        float: left;
+        width: 100%;
+    }
+
+    .label-name {
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .label-des {
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    .label-cost {
+        font-size: 14px;
+        font-weight: 600;
+        color: red;
+    }
+</style>
+
+<a href="Index"><label style="font-size:20px;margin-top:10px;">返回</label></a>
+<div>
+
+    <section style="width:60%;float:left">
+
+        <div style="width:100%;">
+            @Html.Partial("GoodsList", goodsList)
+        </div>
+
+        <table class="table">
+            <tr>
+                <td style="width:80%"><label><span style="margin-left:2em;">配送费</span></label></td>
+                <td style="width:20%">
+                    <label style="display:block;float:left;width:100%;text-align:center;">
+                        <span class="label-cost" style="font-size:20px;">5</span>&nbsp; 元
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td><label><span style="margin-left:2em;">订单总计</span></label></td>
+
+
+                <td>
+                    <label style="display:block;float:left;width:100%;text-align:center;">
+                        <span class="label-cost" style="font-size:20px;">@(DoubleOperationHelper.Add(Model.Cost, 5))</span>&nbsp; 元
+                    </label>
+
+
+                </td>
+            </tr>
+        </table>
+
+    </section>
+
+
+    <section style="width:40%;float:left;padding-left:5%">
+        <div style="width:100%">
+            <table style="width:100%">
+                <tr>
+                    <td style="width:30%">当前状态：</td>
+                    <td style="font-weight:500;font-size:20px;color:orangered">@state</td>
+                </tr>
+                <tr>
+                    <td>预计完成时间：</td>
+                    <td>@Model.ScheduledTime.ToString("g")</td>
+                </tr>
+                <tr>
+                    <td>订单类型：</td>
+                    <td>@type</td>
+                </tr>
+                @if (Model.Type == ((int)OrderType.Deliverty) && Model.Address != null && Model.Address.Length > 0)
+                {
+                    <tr>
+                        <td>送货地址：</td>
+                        <td>@Model.Address</td>
+                    </tr>
+                }
+                @if (Model.RealTime < DateTime.Now)
+                {
+                    <tr>
+                        <td>实际完成时间：</td>
+                        <td>@Model.RealTime.ToString("g")</td>
+                    </tr>
+                }
+            </table>
+            @if (Model.State != Order.STATE_CANCELED && Model.State != Order.STATE_FINISHED)
+            {
+                @Html.ActionLink("取消订单", "Cancel", "Order", new { order_id = Model.Id }, htmlAttributes: new { @style = "display: block; width: 70%; margin-top:10px;margin-right: 15%", @class = "btn btn-default" })
+
+            }
+            @if (Model.State == Order.STATE_INITIAL)
+            {
+                @Html.ActionLink("前往付款", "Pay", "Order", new { order_id = Model.Id }, htmlAttributes: new { @style = "display:block;width:70%;margin-top:10px;margin-right:15%", @class = "btn btn-default" })
+            }
+    </section>
+
+</div>
+
+<script>
+    var orderTitleA = document.getElementById('title_order_action')
+    var goodsTitleA = document.getElementById('title_goods_action')
+    var cartTitleA = document.getElementById('title_cart_action')
+    var userTitleA = document.getElementById('title_user_action')
+
+    if (!orderTitleA.classList.contains('title-selected')) {
+        orderTitleA.classList.add('title-selected')
+        orderTitleA.style.color = '#fff'
+    }
+
+    if (goodsTitleA.classList.contains('title-selected')) {
+        var index = goodsTitleA.classList.item('title-selected')
+        goodsTitleA.classList.remove(index)
+    }
+    if (cartTitleA.classList.contains('title-selected')) {
+        var index = cartTitleA.classList.item('title-selected')
+        cartTitleA.classList.remove(index)
+    }
+    if (userTitleA.classList.contains('title-selected')) {
+        var index = userTitleA.classList.item('title-selected')
+        userTitleA.classList.remove(index)
+    }
+</script>

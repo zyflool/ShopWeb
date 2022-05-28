@@ -1,0 +1,29 @@
+﻿@model Boolean
+@{
+    ViewBag.Title = "删除商品";
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+}
+
+@if (Model)
+{
+
+    @Html.ActionLink("删除成功", "Index", new { controller = "Goods" }, new { @id = "back-succeed" })
+}
+else
+{
+    @Html.ActionLink("删除失败", "Index", new { controller = "Goods" }, new { @id = "back-failure" })
+}
+@if (Model)
+{
+    <script>
+        alert('删除成功');
+        window.location.href = '/';
+    </script>
+}
+else
+{
+    <script>
+        alert('删除失败');
+        window.location.href = '/';
+    </script>
+}

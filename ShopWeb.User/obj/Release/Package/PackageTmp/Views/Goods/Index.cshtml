@@ -1,0 +1,123 @@
+﻿@using ShopWeb.Models;
+@model List<GoodsShowModel>
+@{
+    ViewBag.Title = "商品";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string searchText = "";
+    if (TempData["search"] != null)
+    {
+        searchText = TempData["search"].ToString();
+    }
+}
+
+<script>
+    var orderTitleA = document.getElementById('title_order_action')
+    var goodsTitleA = document.getElementById('title_goods_action')
+    var cartTitleA = document.getElementById('title_cart_action')
+    var userTitleA = document.getElementById('title_user_action')
+
+    console.log(orderTitleA)
+    console.log(goodsTitleA)
+    console.log(cartTitleA)
+    console.log(userTitleA)
+
+    if (!goodsTitleA.classList.contains('title-selected')) {
+        goodsTitleA.classList.add('title-selected')
+        goodsTitleA.style.color = '#fff'
+    }
+
+    if (orderTitleA.classList.contains('title-selected')) {
+        var index = goodsTitleA.classList.item('title-selected')
+        console("order" + index)
+        orderTitleA.classList.remove(index)
+    }
+    if (cartTitleA.classList.contains('title-selected')) {
+        var index = cartTitleA.classList.item('title-selected')
+        console("cart" + index)
+        cartTitleA.classList.remove(index)
+    }
+    if (userTitleA.classList.contains('title-selected')) {
+        var index = userTitleA.classList.item('title-selected')
+        console("user" + index)
+        userTitleA.classList.remove(index)
+    }
+</script>
+
+<style>
+    .name {
+        color: black;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .price {
+        color: black;
+        font-size: 15px;
+    }
+
+    .goods_content {
+        width: 100%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .no-data {
+        float: left;
+        width: 100%;
+        height: 300px;
+        background: url(../../Content/Images/nothing.png) no-repeat;
+        background-size: contain;
+        background-position: center center;
+        clear: both;
+    }
+</style>
+
+<div>
+    <input type="text" id="search-input" name="搜索" style="margin-top:10px" value="@searchText" />
+    <a href="#" id="search-a"><input type="button" value="搜索" /></a>
+    <a href="#" id="real-search-a" style="display:none"></a>
+    <hr />
+    @if (Model.Count == 0)
+    {
+        <div class="no-data" />
+        <h3 style="text-align:center;">没有找到数据</h3>
+    }
+    @for (int i = 0; i < @Model.Count; i++)
+    {
+        GoodsShowModel goods = @Model[i];
+        <a href="Goods/Detail?goods_id=@goods.Id">
+            <div class="goods_content">
+                <div style="float:left;">
+                    <img src="data:image/jpeg;base64, @goods.ImagePath" style="width:80px; height:80px" />
+                </div>
+                <div style="float:left;margin-left:10px">
+                    <label class="name">@goods.Name</label>
+                    <br />
+                    <label class="price">库存：@goods.Inventory</label>
+                </div>
+                <div style="float:right;line-height:80px">
+                    <label class="price">@goods.Price 元/件</label>
+                </div>
+            </div>
+        </a>
+        <div style="clear:both"></div>
+        <hr />
+    }
+</div>
+
+
+<script>
+    var search = document.getElementById('search-a')
+
+    search.onclick = function () {
+        var searchInput = document.getElementById('search-input')
+        var text = searchInput.value + ''
+        if (text.length <= 0) {
+            alert('请输入搜索内容')
+        } else {
+            var realSearch = document.getElementById('real-search-a')
+            realSearch.href = '?search=' + text
+            realSearch.click()
+        }
+    }
+</script>

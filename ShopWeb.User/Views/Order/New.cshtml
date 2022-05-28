@@ -1,0 +1,218 @@
+﻿@using ShopWeb.Models;
+@model NewOrderInfoModel
+@{
+    ViewBag.Title = "新的订单";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // 处理商品列表
+    List<GoodsShowItemModel> goodsList = new List<GoodsShowItemModel>();
+    Model.goodsItemList.ForEach(item =>
+    {
+        goodsList.Add(new GoodsShowItemModel()
+        {
+            GoodsShowModel = item.GoodsShowModel,
+            Count = item.Count
+        });
+    });
+}
+<script>
+    var orderTitleA = document.getElementById('title_order_action')
+    var goodsTitleA = document.getElementById('title_goods_action')
+    var cartTitleA = document.getElementById('title_cart_action')
+    var userTitleA = document.getElementById('title_user_action')
+
+    if (!orderTitleA.classList.contains('title-selected')) {
+        orderTitleA.classList.add('title-selected')
+        orderTitleA.style.color = '#fff'
+    }
+
+    if (goodsTitleA.classList.contains('title-selected')) {
+        var index = goodsTitleA.classList.item('title-selected')
+        goodsTitleA.classList.remove(index)
+    }
+    if (cartTitleA.classList.contains('title-selected')) {
+        var index = cartTitleA.classList.item('title-selected')
+        cartTitleA.classList.remove(index)
+    }
+    if (userTitleA.classList.contains('title-selected')) {
+        var index = userTitleA.classList.item('title-selected')
+        userTitleA.classList.remove(index)
+    }
+</script>
+
+<style>
+
+    #scheduled_time_picker,
+    #order_type_select {
+        width: 100%;
+        max-width: 200px;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+</style>
+
+<section style="float: left; width: 65%; height: auto;padding:1%;margin-top:20px;">
+    <div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ConsigneeName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ConsigneeName, new { htmlAttributes = new { @class = "form-control", @style = "max-width:200px;" } })
+                        @Html.ValidationMessageFor(model => model.ConsigneeName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ConsigneePhone, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ConsigneePhone, new { htmlAttributes = new { @class = "form-control", @style = "max-width:200px;" } })
+                        @Html.ValidationMessageFor(model => model.ConsigneePhone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ScheduledTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="datetime-local" id="scheduled_time_picker" min="@(DateTime.Now.AddMinutes(50).ToString("s"))" value="@(DateTime.Now.AddMinutes(50).ToString("s"))" />
+                        @Html.HiddenFor(model => model.ScheduledTime, new { htmlAttributes = new { @class = "form-control", @id = "scheduled_time_input" } })
+                        @Html.ValidationMessageFor(model => model.ScheduledTime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.OrdersType, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EnumDropDownListFor(model => model.OrdersType, new { @id = "order_type_select" })
+                    </div>
+                </div>
+
+                <div class="form-group" id="address_group">
+                    @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @style = "margin-right:10%;max-width:70%;" } })
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @for (int i = 0; i < goodsList.Count; i++)
+                {
+                    @Html.HiddenFor(model => model.goodsItemList[i].Count)
+                    @Html.HiddenFor(model => model.goodsItemList[i].GoodsShowModel.Id)
+                    @Html.HiddenFor(model => model.goodsItemList[i].GoodsShowModel.Name)
+                    @Html.HiddenFor(model => model.goodsItemList[i].GoodsShowModel.Price)
+                    @Html.HiddenFor(model => model.goodsItemList[i].GoodsShowModel.Inventory)
+                    @Html.HiddenFor(model => model.goodsItemList[i].GoodsShowModel.ImagePath)
+                }
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="确认订单" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<section style="float: left; width: 35%; height: auto;margin-top:20px;">
+    <div>
+        @Html.Partial("GoodsList", goodsList)
+    </div>
+</section>
+
+<script>
+    var orderTitleA = document.getElementById('title_order_action')
+    var goodsTitleA = document.getElementById('title_goods_action')
+    var cartTitleA = document.getElementById('title_cart_action')
+    var userTitleA = document.getElementById('title_order_action')
+
+    orderTitleA.classList.add('title-selected')
+    orderTitleA.style.color = '#fff'
+
+    if (goodsTitleA.classList.contains('title-selected')) {
+        var index = goodsTitleA.classList.item('title-selected')
+        goodsTitleA.classList.remove(index)
+    }
+    if (cartTitleA.classList.contains('title-selected')) {
+        var index = cartTitleA.classList.item('title-selected')
+        cartTitleA.classList.remove(index)
+    }
+    if (userTitleA.classList.contains('title-selected')) {
+        var index = userTitleA.classList.item('title-selected')
+        userTitleA.classList.remove(index)
+    }
+</script>
+
+
+<script>
+
+    /// 时间选择
+
+    var timePicker = document.getElementById('scheduled_time_picker')
+    @*timePicker.value = '@Model.ScheduledTime'*@
+    timePicker.onchange = function () {
+        var timeInput = document.getElementById('ScheduledTime')
+        console.log("时间选择")
+        console.log(timeInput)
+        console.log(timeInput.value)
+        timeInput.value = this.value;
+    }
+
+
+    /// 类型选择
+
+    var orderTypeSelect = document.getElementById('order_type_select')
+
+    var index = orderTypeSelect.selectedIndex;
+    value = orderTypeSelect.options[index].value;
+    text = orderTypeSelect.options[index].text;
+
+    address = document.getElementById('address_group')
+
+    if (text === "到店自取") {
+        console.log('none')
+        address.style.display = 'none';
+        var addressTextarea = address.getElementsByTagName("textarea")[0]
+        addressTextarea.value = 'a';
+    } else {
+        console.log('block')
+        address.style.display = 'block';
+        var addressTextarea = address.getElementsByTagName("textarea")[0]
+        addressTextarea.value = '';
+    }
+
+
+    orderTypeSelect.onchange = function () {
+        var index = this.selectedIndex;
+        value = this.options[index].value;
+        text = this.options[index].text;
+        console.log("index = " + index)
+        console.log("value = " + value)
+        console.log("text = " + text)
+
+        address = document.getElementById('address_group')
+
+        if (text === "到店自取") {
+            console.log('none')
+            address.style.display = 'none';
+            var addressTextarea = address.getElementsByTagName("textarea")[0]
+            addressTextarea.value = 'a';
+        } else {
+            console.log('block')
+            address.style.display = 'block';
+            var addressTextarea = address.getElementsByTagName("textarea")[0]
+            addressTextarea.value = '';
+        }
+    }
+</script>

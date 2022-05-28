@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - XX超市在线零售平台</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                @Html.ActionLink("XX超市在线零售平台 管理员系统", "Index", "Home", new { area = "" }, new { @class = "title-label" })
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - XX超市在线零售平台</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+<style>
+    .title-label {
+        background-color: transparent;
+        box-sizing: border-box;
+        color: rgb(157,157,157);
+        cursor: pointer;
+        display: block;
+        float: left;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 18px;
+        height: 50px;
+        line-height: 20px;
+        padding-bottom: 15px;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 15px;
+        text-decoration-color: rgb(157,157,157);
+        text-decoration-line: none;
+        text-decoration-style: solid;
+        text-decoration-thickness: auto;
+        text-size-adjust: 100%;
+        -webkit-tap-highlight-color: rgb(0,0,0,0);
+    }
+
+        .title-label:hover {
+            background-color: transparent;
+            box-sizing: border-box;
+            color: rgb(157,157,157);
+            cursor: pointer;
+            display: block;
+            float: left;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 18px;
+            height: 50px;
+            line-height: 20px;
+            outline-color: rgb(255, 255, 255);
+            outline-style: none;
+            outline-width: 0px;
+            padding-bottom: 15px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 15px;
+            text-decoration-color: rgb(255, 255, 255);
+            text-decoration-line: none;
+            text-decoration-style: solid;
+            text-decoration-thickness: auto;
+            text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgb(0,0,0,0);
+        }
+
+        .title-label:focus {
+            background-color: transparent;
+            box-sizing: border-box;
+            color: rgb(157,157,157);
+            cursor: pointer;
+            display: block;
+            float: left;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 18px;
+            height: 50px;
+            line-height: 20px;
+            outline-color: rgb(255, 255, 255);
+            outline-style: none;
+            outline-width: 0px;
+            padding-bottom: 15px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 15px;
+            text-decoration-color: rgb(255, 255, 255);
+            text-decoration-line: none;
+            text-decoration-style: solid;
+            text-decoration-thickness: auto;
+            text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgb(0,0,0,0);
+        }
+</style>

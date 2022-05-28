@@ -1,0 +1,223 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - XX超市在线零售平台</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body style="margin:0px;padding:0px;">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="position:fixed;">
+        <div class="container">
+            <div class="navbar-header" style="width:100%">
+                @Html.ActionLink("XX超市在线零售平台 管理员系统", "Index", "Home", new { area = "" }, new { @class = "title-label" })
+                @if (Session["manager"] != null && Convert.ToInt32(Session["manager"]) > 0)
+                {
+                    @Html.ActionLink("退出登录", "Logout", new { controller = "Home" }, new { @class = "logout-a" })
+                }
+            </div>
+        </div>
+    </div>
+    <div>
+        <section style="float: left; width: 8%; height: auto; position: fixed;margin-top:50px;">
+            <nav>
+                <ul style="padding-left: 0px;margin-top:0px;margin-bottom:0px;">
+                    <li class="leftbar">@Html.ActionLink("商品管理", "Index", new { controller = "Goods" }, new { @class = "bar-title" })</li>
+                    <li class="leftbar">@Html.ActionLink("订单管理", "Index", new { controller = "Order" }, new { @class = "bar-title" })</li>
+                    <li class="leftbar">@Html.ActionLink("用户管理", "Index", new { controller = "User"}, new { @class = "bar-title" })</li>
+                    <li class="leftbar">@Html.ActionLink("修改密码", "Edit", new { controller = "Home" }, new { @class = "bar-title" })</li>
+                </ul>
+            </nav>
+        </section>
+        <section class="webcontent">
+            @RenderBody()
+        </section>
+    </div>
+    <div style="clear:both"></div>
+    <div style="width:auto;text-align:center">
+        <footer>
+            <p>&copy; @DateTime.Now.Year - XX超市在线零售平台</p>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+<style>
+
+    .leftbar {
+        list-style-type: none;
+    }
+
+    .bar-title {
+        display: block;
+        width: fit-content;
+        line-height: normal;
+        font-size: 20px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 10px;
+        padding-right: 10px;
+        color: white;
+        text-decoration: none;
+        background-color: #9d9d9d;
+    }
+        .bar-title:hover {
+            display: block;
+            width: fit-content;
+            line-height: normal;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size: 20px;
+            color: white;
+            text-decoration: none;
+            background-color: #9d9d9d;
+        }
+        .bar-title:after {
+            display: block;
+            width: fit-content;
+            line-height: normal;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size: 20px;
+            color: white;
+            text-decoration: none;
+            background-color: #9d9d9d;
+        }
+        .bar-title:focus {
+            display: block;
+            width: fit-content;
+            line-height: normal;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size: 20px;
+            color: white;
+            text-decoration: none;
+            background-color: #9d9d9d;
+        }
+    .logout-a {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        line-height: 20px;
+        font-size: 14px;
+        padding-top: 15px;  
+        float: right;
+        color: #9d9d9d;
+        text-decoration: none;
+    }
+        .logout-a:hover {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 20px;
+            float: right;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logout-a:after {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            line-height: 20px;
+            font-size: 14px;
+            float: right;
+            color: #9d9d9d;
+            text-decoration: none;
+        }
+        .logout-a:focus {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            line-height: 20px;
+            font-size: 14px;
+            float: right;
+            color: #9d9d9d;
+            text-decoration: none;
+        }
+
+    .webcontent {
+        float: left;
+        width: 90%;
+        height: auto;
+        padding: 1%;
+        margin-left:8%;
+        margin-top:50px;
+    }
+    .title-label {
+        background-color: transparent;
+        box-sizing: border-box;
+        color: rgb(157,157,157);
+        cursor: pointer;
+        display: block;
+        float: left;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 18px;
+        height: 50px;
+        line-height: 20px;
+        padding-bottom: 15px;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 15px;
+        text-decoration-color: rgb(157,157,157);
+        text-decoration-line: none;
+        text-decoration-style: solid;
+        text-decoration-thickness: auto;
+        text-size-adjust: 100%;
+        -webkit-tap-highlight-color: rgb(0,0,0,0);
+    }
+
+        .title-label:hover {
+            background-color: transparent;
+            box-sizing: border-box;
+            color: rgb(157,157,157);
+            cursor: pointer;
+            display: block;
+            float: left;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 18px;
+            height: 50px;
+            line-height: 20px;
+            outline-color: rgb(255, 255, 255);
+            outline-style: none;
+            outline-width: 0px;
+            padding-bottom: 15px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 15px;
+            text-decoration-color: rgb(255, 255, 255);
+            text-decoration-line: none;
+            text-decoration-style: solid;
+            text-decoration-thickness: auto;
+            text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgb(0,0,0,0);
+        }
+        .title-label:focus {
+            background-color: transparent;
+            box-sizing: border-box;
+            color: rgb(157,157,157);
+            cursor: pointer;
+            display: block;
+            float: left;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 18px;
+            height: 50px;
+            line-height: 20px;
+            outline-color: rgb(255, 255, 255);
+            outline-style: none;
+            outline-width: 0px;
+            padding-bottom: 15px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 15px;
+            text-decoration-color: rgb(255, 255, 255);
+            text-decoration-line: none;
+            text-decoration-style: solid;
+            text-decoration-thickness: auto;
+            text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgb(0,0,0,0);
+        }
+</style>

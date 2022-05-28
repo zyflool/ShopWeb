@@ -1,0 +1,67 @@
+﻿@using ShopWeb.Utils;
+@model List<ShopWeb.Models.GoodsShowItemModel>
+
+<style>
+
+    .label-title {
+        text-align: center;
+        display: block;
+        float: left;
+        width: 100%;
+    }
+
+    .label-name {
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .label-des {
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    .label-cost {
+        font-size: 14px;
+        font-weight: 600;
+        color: red;
+    }
+</style>
+
+<table class="table" style="margin-bottom:0px;">
+    <tr>
+        <th>
+            @Html.Label("商品", new { @class = "label-title" })
+        </th>
+        <th>
+            @Html.Label("价格", new { @class = "label-title" })
+        </th>
+    </tr>
+    @{
+        double sumCost = 0.0;
+    }
+    @foreach (var item in Model)
+    {
+        sumCost = DoubleOperationHelper.Add(sumCost, DoubleOperationHelper.Multiply(item.GoodsShowModel.Price, item.Count));
+        <tr>
+            <td style="width:80%">
+                <div>
+                    <img src="data:image/jpeg;base64, @item.GoodsShowModel.ImagePath" , style="width:17%; display:block; float:left" />
+                    <label class="label-name" style="display:block; float: left; width:80%; margin-left:3%">@item.GoodsShowModel.Name</label>
+                    <label class="label-des" style="display: block; float: left; width: 80%; margin-left:3%;">@item.GoodsShowModel.Price 元/件 * @item.Count 件</label>
+                </div>
+            </td>
+            <td style="width:20%">
+                <label style="display:block;float:left;width:100%;text-align:center;"><span class="label-cost">@(DoubleOperationHelper.Multiply(item.Count, item.GoodsShowModel.Price))</span>&nbsp;元</label>
+            </td>
+        </tr>
+    }
+
+    <tr>
+        <td>
+            <label><span style="margin-left:2em;">商品总计</span></label>
+        </td>
+        <td>
+            <label style="display:block;float:left;width:100%;text-align:center;"><span class="label-cost" style="font-size:20px;">@sumCost</span>&nbsp; 元</label>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,70 @@
+﻿@using ShopWeb.Models;
+@model GoodsShowModel
+@{
+    ViewBag.Title = "商品详情页";
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+}
+
+<style>
+    .back-label {
+        text-decoration: none;
+        font-size: 20px;
+        color: darkblue;
+        font-weight: 400;
+    }
+
+        .back-label:hover {
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 600;
+            color: darkblue;
+        }
+
+        .back-label:after {
+            text-decoration: none;
+            font-size: 20px;
+            color: darkblue;
+            font-weight: 400;
+        }
+
+    .label_content {
+        line-height: 50px;
+        font-size: 25px;
+        color: orange;
+    }
+
+    .label_element {
+        line-height: 50px;
+        font-size: 20px;
+        color: black;
+    }
+</style>
+
+@Html.ActionLink("返回", "Index", new { controller = "Goods" }, new { @class = "back-label" })
+<br />
+<script>
+    if ('@Model'.length <= 0 || @Model.Id <= 0) {
+        alert("该商品不存在")
+        document.getElementsByClassName("back-label").onclick()
+    }
+</script>
+<div style="float:left;width:100%;height:350px;margin-top:20px;">
+    <img src="data:image/jpeg;base64, @Model.ImagePath" style="width:300px;height:300px;display:block;float:left"/>
+
+    <div style="float:left;margin-left:20px;">
+        <h2 style="float: left; display: block; clear: both">@Model.Name</h2>
+
+        <div style="float: left; clear: both">
+            <label class="label_content">@Model.Price</label>
+            <label class="label_element">元</label>
+            <label class="label_element">&nbsp;/&nbsp;件</label>
+        </div>
+        <span class="label_element" style="clear:both;display:block">库存量：@Model.Inventory</span>
+
+        <div style="float: left; margin-top: 30px;">
+            @Html.ActionLink("编辑", "Edit", "Goods", new { goods_id = Model.Id }, new { @class = "btn btn-default" })
+            @Html.ActionLink("删除", "Delete", "Goods", new { goods_id = Model.Id} , new { @class = "btn btn-default" })
+        </div>
+    </div>
+</div>
+<div style="clear:both" />

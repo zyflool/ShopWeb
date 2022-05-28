@@ -1,0 +1,496 @@
+﻿@using ShopWeb.Utils;
+@using ShopWeb.Models;
+@model List<CartGoodsShowItemModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    var orderTitleA = document.getElementById('title_order_action')
+    var goodsTitleA = document.getElementById('title_goods_action')
+    var cartTitleA = document.getElementById('title_cart_action')
+    var userTitleA = document.getElementById('title_user_action')
+
+    console.log(orderTitleA)
+    console.log(goodsTitleA)
+    console.log(cartTitleA)
+    console.log(userTitleA)
+
+    if (!cartTitleA.classList.contains('title-selected')) {
+        cartTitleA.classList.add('title-selected')
+        cartTitleA.style.color = '#fff'
+    }
+
+    if (orderTitleA.classList.contains('title-selected')) {
+        var index = goodsTitleA.classList.item('title-selected')
+        console("order" + index)
+        orderTitleA.classList.remove(index)
+    }
+    if (goodsTitleA.classList.contains('title-selected')) {
+        var index = goodsTitleA.classList.item('title-selected')
+        console("cart" + index)
+        goodsTitleA.classList.remove(index)
+    }
+    if (userTitleA.classList.contains('title-selected')) {
+        var index = userTitleA.classList.item('title-selected')
+        console("user" + index)
+        userTitleA.classList.remove(index)
+    }
+</script>
+<style>
+    .no-data {
+        float: left;
+        width: 100%;
+        height: 300px;
+        background: url(../../Content/Images/nothing.png) no-repeat;
+        background-size: contain;
+        background-position: center center;
+        clear: both;
+    }
+
+    .highlight_title {
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    .sidebar_content {
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .name {
+        color: black;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .price {
+        color: black;
+        font-size: 15px;
+        line-height: 50px;
+    }
+
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    html {
+        height: 100%;
+    }
+
+    body {
+        min-height: 100%;
+    }
+
+    body {
+        position: relative;
+    }
+
+    .footer {
+        background-color: white;
+        box-shadow: 0px -1px 20px 0px #e2e2e2;
+        height: auto;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+    }
+
+    .none-edit {
+        background-color: white;
+        width: inherit;
+        text-align: center;
+        color: black;
+        border: 0px;
+    }
+
+    input[type='number']::-webkit-outer-spin-button,
+    input[type='number']::-webkit-inner-spin-button {
+        -webkit-appearance: none !important;
+        margin: 0;
+    }
+    /*在firefox下移除input[number]的上下箭头*/
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+
+    .disappear {
+        border-width: 0px;
+        width: 0px;
+        height: 0px;
+        font-size: 0px;
+        padding-top: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
+
+    #submit_btn_a {
+        color: #FFF;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+        #submit_btn_a:hover, #submit_btn_a:focus, #submit_btn_a:after {
+            text-decoration: none;
+        }
+</style>
+
+<style type="text/css">
+    .cart {
+        width: 100%;
+        float: left;
+        padding-left: 2%;
+        padding-right: 2%;
+    }
+
+    .cart-title {
+        margin-bottom: 10px;
+        font-size: 14px;
+        border-bottom: 1px solid #AED2FF;
+        line-height: 30px;
+        height: 30px;
+        font-weight: 700;
+        text-indent: 15px;
+        color: #333;
+        font-family: 'Microsoft YaHei';
+    }
+    /* border-bottom底部边框 ,text-indent：首行缩进*/
+    .cart-table {
+        width: 100%;
+        margin: 0 auto;
+        border-color: transparent;
+        font-size: 12px;
+        font-family: Verdana,"Microsoft YaHei";
+        color: #333333;
+    }
+
+        .cart-table th {
+            border-bottom: 2px solid #B2D1FF;
+            font-weight: normal;
+            height: 35px;
+            line-height: 1.4375rem;
+            text-align: center;
+        }
+
+    .cart-item {
+        background-color: #FAFCFF;
+        border-bottom: 1px dotted #84B3FD;
+    }
+
+        .cart-item td {
+            height: 55px;
+            text-align: center;
+        }
+
+        .cart-item .cart-txt-left {
+            text-align: left;
+        }
+
+    .cart-name {
+        color: #3366D4;
+        font-weight: bold;
+    }
+
+    .cart-subtotal {
+        color: #FF3334;
+        font-weight: bold;
+    }
+
+    .cart-reduce, .cart-add {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        color: #FFF;
+        background-color: #BDBDBD;
+        border: 0;
+        cursor: pointer;
+        border-radius: 2px;
+        font-family: 'Arial';
+        font-size: 0.833331rem;
+    }
+
+        .cart-reduce:hover, .cart-add:hover {
+            background-color: #FF9900;
+        }
+
+    .cart-num {
+        margin: 5px;
+        width: 35px;
+        text-align: center;
+        height: 20px;
+        line-height: 20px;
+        display: inline-block;
+        background: #fff;
+    }
+
+    .cart-del, .cart-all {
+        color: #3366D4;
+        text-decoration:none;
+    }
+
+        .cart-del:hover, .cart-all:hover {
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .cart-bottom {
+        height: 55px;
+        text-align: right;
+    }
+
+    .cart-total-price {
+        color: #FF3334;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .cart-bottom-btn {
+        color: #FFF;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        margin: 0 20px;
+        background-color: #FE8502;
+        border: 1px solid #FF6633;
+        border-radius: 5px 5px 5px 5px;
+        padding: 6px 12px;
+    }
+
+        .cart-bottom-btn:hover {
+            background-color: #FF6600;
+        }
+</style>
+
+<div>
+    <div class="cart" style="margin-bottom:20px;">
+        <div class="cart-title">我的购物车</div>
+        <form method="post" action="Order/PreNew">
+            <table class="cart-table">
+                <tr>
+                    <th width="60"><a class="cart-all">全选</a></th>
+                    <th>商品</th>
+                    <th width="120">单价</th>
+                    <th width="100">数量</th>
+                    <th width="120">小计</th>
+                    <th width="80">操作</th>
+                </tr>
+
+                @if (Model == null || Model.Count == 0)
+                {
+                    <tr>
+                        <td colspan="6">
+                            <div class="no-data"></div>
+                            <h3 style="text-align:center;">没有找到数据</h3>
+                        </td>
+                    </tr>
+                }
+
+                @if (Model != null && Model.Count > 0)
+                {
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        GoodsShowItemModel goodsItem = Model[i];
+                        <tr class="cart-item">
+                            <td>
+                                @Html.CheckBoxFor(model => model[i].IsSelected, new { @class = "cart-check" })
+                            </td>
+                            <td class="cart-txt-left">
+                                <span class="cart-name">
+                                    @Html.HiddenFor(model => model[i].GoodsShowModel.Id)
+                                    @Html.HiddenFor(model => model[i].GoodsShowModel.Name)
+                                    @Html.HiddenFor(model => model[i].GoodsShowModel.ImagePath)
+                                    @Html.HiddenFor(model => model[i].GoodsShowModel.Price)
+                                    @Html.HiddenFor(model => model[i].GoodsShowModel.Inventory)
+                                    <img src="data:image/jpeg;base64, @(goodsItem.GoodsShowModel.ImagePath)" title="商品图片" style="width:60px;height:80px">
+                                    <label class="name">@goodsItem.GoodsShowModel.Name</label>
+                                </span>
+                            </td>
+                            <td><span class="cart-price">@goodsItem.GoodsShowModel.Price</span></td>
+                            <td>
+                                <a href="#" id="goods_count_reduce_a_@i" style="text-decoration:none;">
+                                    <span class="cart-reduce" id="goods_count_reduce_@i">-</span>
+                                </a>
+                                <span class="cart-num">
+                                    <input id="goods_count_num_@i" class="none-edit text-box single-line" data-val="true" data-val-number="字段 Count 必须是一个数字。" data-val-required="Count 字段是必需的。" name="[@i].Count" onfocus="this.blur();" readonly="readonly" type="number" value="@Model[i].Count">
+                                </span>
+
+                                <a href="#" id="goods_count_add_a_@i" style="text-decoration:none;">
+                                    <span class="cart-add" id="goods_count_add_@i">+</span>
+                                </a>
+                            </td>
+                            <td><span class="cart-subtotal" id="goods_cost_@i">@(DoubleOperationHelper.Multiply(goodsItem.Count, goodsItem.GoodsShowModel.Price))</span></td>
+                            <td>@Html.ActionLink("删除","Delete","Cart",new { goods_id = Model[i].GoodsShowModel.Id}, htmlAttributes: new { @class="cart-del"})</td>
+                        </tr>
+
+                    }
+                }
+            </table>
+            <input type="submit" id="submit_btn" class="disappear">
+        </form>
+
+        <table class="cart-table footer">
+            <tr class="cart-bottom">
+                <td colspan="6">
+                    <span class="cart-bottom-span">已选择<span class="cart-total-num" id="sum_goods_count">0</span>件商品</span>
+                    <span class="cart-bottom-span">总计：<span class="cart-total-price" id="sum_goods_cost">0</span></span>
+                    <a id="submit_btn_a" href="#"><span class="cart-bottom-btn">提交订单</span></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+
+    function getGoodsIds() {
+        @{
+            string ids = "";
+            foreach (GoodsShowItemModel item in Model)
+            {
+                ids += item.GoodsShowModel.Id;
+                ids += ",";
+            }
+        }
+        var goodsIdStr = '@ids';
+        return goodsIdStr.split(',');
+    }
+
+    function getGoodsCosts() {
+        @{
+                string goodsCost = "";
+                foreach (GoodsShowItemModel item in Model)
+                {
+                    goodsCost += item.GoodsShowModel.Price.ToString();
+                    goodsCost += ",";
+                }
+        }
+        var pricestr = '@(goodsCost)'
+        return pricestr.split(',');
+    }
+
+    function changeSumText() {
+        console.log('修改总计标签')
+        var numTds = document.getElementsByClassName('cart-num')
+
+        var counts = new Array();
+        for (var i = 0; i < numTds.length; i++) {
+            counts[i] = numTds[i].getElementsByTagName('input')[0]
+        }
+        console.log(counts)
+
+        var cartItems = document.getElementsByClassName('cart-item')
+        var checkboxes = new Array();
+        for (var i = 0; i < cartItems.length; i++) {
+            checkboxes[i] = cartItems[i].querySelector('input')
+        }
+        console.log(checkboxes)
+
+        var sumCost = 0.0;
+        var sumCount = 0;
+        var prices = getGoodsCosts();
+        for (var i = 0; i < checkboxes.length; i++) {
+            console.log(i)
+            if (checkboxes[i].checked) {
+                console.log('ischecked')
+                sumCost = add_A_B(sumCost, multiply_A_B(prices[i], parseInt(counts[i].value)))
+                sumCount += parseInt(counts[i].value);
+            }
+        }
+        console.log('sumCost = ' + sumCost)
+        console.log('sumCount = ' + sumCount)
+
+        var sumCountText = document.getElementById('sum_goods_count')
+        var sumCostText = document.getElementById('sum_goods_cost')
+
+        sumCountText.innerHTML = sumCount
+        sumCostText.innerHTML = sumCost
+    }
+
+    function changeGoodsCost(index, number) {
+        var prices = getGoodsCosts();
+        goodsCost = document.getElementById('goods_cost_' + index)
+        goodsCost.innerText = multiply_A_B(prices[index], parseInt(number)) + ""
+        console.log('一共' + multiply_A_B(prices[index], parseInt(number)))
+        changeSumText();
+    }
+
+    var reduces = document.getElementsByClassName('cart-reduce')
+    var adds = document.getElementsByClassName('cart-add');
+    for (var i = 0; i < reduces.length; i++) {
+        reduces[i].onclick = function () {
+            var id = this.id + ""
+            id = id.substring(id.length - 1, id.length);
+            var index = parseInt(id);
+
+            var num = document.getElementById('goods_count_num_' + index);
+            var number = parseInt(num.value);
+            if (number > 1) {
+                num.value = number - 1;
+                changeGoodsCost(index, parseInt(num.value))
+            } else {
+                alert('商品数量无法减少，如需删除商品请请点击右侧"删除"按钮。')
+            }
+        }
+    }
+    for (var i = 0; i < adds.length; i++) {
+        adds[i].onclick = function () {
+            var id = this.id + ""
+            id = id.substring(id.length - 1, id.length);
+            var index = parseInt(id);
+            var num = document.getElementById('goods_count_num_' + index)
+            num.value = parseInt(num.value) + 1
+            changeGoodsCost(index, parseInt(num.value))
+        }
+    }
+
+    var cartItems = document.getElementsByClassName('cart-item')
+    var checkboxes = new Array();
+    for (var i = 0; i < cartItems.length; i++) {
+        checkboxes[i] = cartItems[i].querySelector('input')
+        checkboxes[i].onclick = function () {
+            changeSumText()
+        }
+    }
+
+    var submit = document.getElementById('submit_btn_a')
+    var submitInput = document.getElementById('submit_btn')
+    submit.onclick = function () {
+        console.log("点击 提交订单")
+        var sumCountText = document.getElementById('sum_goods_count')
+        var sumCostText = document.getElementById('sum_goods_cost')
+
+        sumCount = parseInt(sumCountText.innerHTML)
+        sumCost = parseFloat(sumCostText.innerHTML)
+        console.log("sumCount = " + sumCount)
+        console.log("sumCost = "+ sumCost)
+        if (sumCount <= 0 || sumCost <= 0) {
+            alert('请选择要结算的商品')
+        } else if (sumCost < 20) {
+            alert('订单金额不得少于20元')
+        } else {
+            console.log('submit on click')
+            submitInput.click();
+        }
+    }
+
+    /// 全选
+    var cartAll = document.getElementsByClassName('cart-all')[0]
+    cartAll.onclick = function () {
+        var cartItems = document.getElementsByClassName('cart-item')
+        var checkboxes = new Array();
+        for (var i = 0; i < cartItems.length; i++) {
+            checkboxes[i] = cartItems[i].querySelector('input')
+            checkboxes[i].checked = 'checked';
+        }
+        changeSumText();
+    }
+</script>

@@ -1,0 +1,160 @@
+﻿@using ShopWeb.Models;
+@model List<User>
+@{
+    ViewBag.Title = "User";
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+}
+
+<style>
+    .no-data {
+        float: left;
+        width: 100%;
+        height: 300px;
+        background: url(../../Content/Images/nothing.png) no-repeat;
+        background-size: contain;
+        background-position: center center;
+        clear: both;
+    }
+</style>
+
+
+<style type="text/css">  
+    /* border-bottom底部边框 ,text-indent：首行缩进*/
+    .user-table {
+        width: 100%;
+        margin: 0 auto;
+        border-color: transparent;
+        font-size: 16px;
+        font-family: Verdana,"Microsoft YaHei";
+        color: #333333;
+    }
+
+        .user-table th {
+            border-bottom: 2px solid #B2D1FF;
+            font-weight: bold;
+            height:30px;
+            line-height: 1.4375rem;
+            text-align: center;
+        }
+
+    .user-item {
+        background-color: #FAFCFF;
+        border-bottom: 1px dotted #84B3FD;
+    }
+
+        .user-item td {
+            height: 10px;
+            text-align: center;
+        }
+
+        .user-item:hover {
+            background-color:#b1cfff;
+        }
+
+</style>
+
+<div style="width:100%">
+    <div class="form-group" style="float:left;height:30px;">
+        <div class="col-md-10" style="width:auto">
+            <input type="text" placeholder="请输入要搜索的用户名称" id="search-text" name="搜索" class="form-control" style="width: 200px; display: block; float: left" />
+            <a id="search-a">
+                <input type="button" id="search-button" value="搜索" class="btn btn-default" style="margin-left:10px;display:block; float:left" />
+            </a>
+            <div style="display: block; float: left;margin-left:10px;">
+                <input type="radio" checked="checked" value="用户id" name="search" id="search_option_id" style="line-height:30px;" /> 
+                <label style="line-height: 30px; margin-bottom: 0px;font-weight:normal" for="search_option_id">用户id</label>
+                <input type="radio" value="用户名" name="search" id="search_option_name" style="line-height:30px;" /> 
+                <label style="line-height: 30px; margin-bottom: 0px; font-weight: normal " for="search_option_name">用户名</label>
+            </div>
+        </div>
+    </div>
+    <div style="float:left;width:100%;height:20px;">
+        <hr />
+    </div>
+</div>
+<div style="clear:both;"></div>
+<div style="width:100%;padding-left:5%;padding-right:5%;">
+    <table class="user-table">
+        <tbody>
+            <tr>
+                <th>用户id</th>
+                <th>用户名</th>
+                <th>联系电话</th>
+            </tr>
+
+            @if (Model == null || Model.Count <= 0)
+            {
+                <tr>
+                    <td colspan="3">
+                        <span class="no-data"></span>
+                        <h3 style="text-align:center;">没有找到数据</h3>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                for (int i = 0; i < Model.Count; i++)
+                {
+        <tr class="user-item">
+            <td>@Model[i].Id</td>
+            <td>@Model[i].Name</td>
+            <td>@Model[i].Phone</td>
+        </tr>
+                }
+            }
+
+
+        </tbody>
+    </table>
+</div>
+
+
+
+<script>
+
+    function ajustSearchContent() {
+        var radioId = document.getElementById('search_option_id')
+        var radioName = document.getElementById('search_option_name')
+        var searchText = document.getElementById('search-text')
+        if (radioId.checked) {
+            searchText.placeholder = '请输入要搜索的用户id'
+        } else {
+            searchText.placeholder = '请输入要搜索的用户名称'
+        }
+    }
+
+    ajustSearchContent()
+    var radioId = document.getElementById('search_option_id')
+    var radioName = document.getElementById('search_option_name')
+    radioId.onchange = function () {
+        ajustSearchContent()
+    }
+    radioName.onchange = function () {
+        ajustSearchContent()
+    }
+
+    text = document.getElementById('search-text');
+    console.log(text)
+    button = document.getElementById('search-button');
+    console.log(button)
+    a = document.getElementById('search-a');
+    console.log(a)
+    button.onclick = function () {
+        searchContent = text.value;
+        console.log(searchContent)
+        if (searchContent.length <= 0) {
+            console.log('no')
+            alert('搜索内容不能为空');
+        } else {
+            var radioId = document.getElementById('search_option_id')
+            var radioName = document.getElementById('search_option_name')
+            if (radioId.checked) {
+                a.href = 'User?content=id&search=' + searchContent;
+                a.click();
+            } else {
+                a.href = 'User?content=name&search=' + searchContent;
+                a.click();
+            }
+        }
+    };
+</script>

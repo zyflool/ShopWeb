@@ -1,0 +1,9 @@
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.Models\bin\Debug\ShopWeb.Models.dll
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.Models\bin\Debug\ShopWeb.Models.pdb
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.Models\bin\Debug\ShopWeb.Utils.dll
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.Models\bin\Debug\ShopWeb.Utils.pdb
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.Models\obj\Debug\ShopWeb.Models.csproj.AssemblyReference.cache
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.Models\obj\Debug\ShopWeb.Models.csproj.CoreCompileInputs.cache
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.Models\obj\Debug\ShopWeb.Models.csproj.CopyComplete
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.Models\obj\Debug\ShopWeb.Models.dll
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.Models\obj\Debug\ShopWeb.Models.pdb

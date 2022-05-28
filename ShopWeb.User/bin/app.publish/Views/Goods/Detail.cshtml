@@ -1,0 +1,149 @@
+﻿@using ShopWeb.Models;
+@model GoodsShowModel
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    var orderTitleA = document.getElementById('title_order_action')
+    var goodsTitleA = document.getElementById('title_goods_action')
+    var cartTitleA = document.getElementById('title_cart_action')
+    var userTitleA = document.getElementById('title_user_action')
+
+    console.log(orderTitleA)
+    console.log(goodsTitleA)
+    console.log(cartTitleA)
+    console.log(userTitleA)
+
+    if (!goodsTitleA.classList.contains('title-selected')) {
+        goodsTitleA.classList.add('title-selected')
+        goodsTitleA.style.color = '#fff'
+    }
+
+    if (orderTitleA.classList.contains('title-selected')) {
+        var index = goodsTitleA.classList.item('title-selected')
+        console("order" + index)
+        orderTitleA.classList.remove(index)
+    }
+    if (cartTitleA.classList.contains('title-selected')) {
+        var index = cartTitleA.classList.item('title-selected')
+        console("cart" + index)
+        cartTitleA.classList.remove(index)
+    }
+    if (userTitleA.classList.contains('title-selected')) {
+        var index = userTitleA.classList.item('title-selected')
+        console("user" + index)
+        userTitleA.classList.remove(index)
+    }
+</script>
+
+<style>
+    .label_content {
+        font-size: 25px;
+        color: orange;
+    }
+
+    .label_element {
+        font-size: 20px;
+        color: black;
+    }
+
+    .button_buy {
+        width: 100px;
+        height: 30px;
+        border-color: black;
+        border-radius: 8px;
+        background-color: chocolate;
+        color: white;
+    }
+</style>
+
+<a href="Index"><label style="font-size:20px;margin-top:10px;">返回</label></a>
+<br />
+<div style="float:left;width:100%;height:350px">
+    <img src="data:image/jpeg;base64, @Model.ImagePath" style="width:300px;height:300px;display:block;float:left" />
+    <div style="float:left;margin-left:20px;">
+        <h2 style="float:left;display:block;">@Model.Name</h2>
+        <div style="clear:both" />
+        <div style="float:left;">
+            <label class="label_element">每件</label>
+            <label class="label_content">@Model.Price</label>
+            <label class="label_element">元</label>
+        </div>
+        @{
+            int count = 1;
+        }
+        <div style="clear:both" />
+        <div style="float:left;margin-top:30px;">
+            <div style="float:left;font-size:20px;margin-left:10px">
+                <a href="#" id="decase_goods_count" style="color:red;">-</a>
+
+                <label id="goods_count" style="border-block-style:outset">&nbsp;@count&nbsp;</label>
+
+                <a href="#" id="add_goods_count" style="color:red;">+</a>
+
+                &nbsp;&nbsp;
+                <label class="label_element">件 &nbsp;共&nbsp;</label>
+                <label class="label_element" id="goods_cost">@((Model.Price)*count)</label>
+                <label class="label_element">&nbsp;元</label>
+            </div>
+            <div style="clear:both" />
+            <div style="float:left;margin-top:10px;">
+                <a href="#" id="in_cart"><input type="button" value="加入购物车" class="button_buy" /></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="clear:both" />
+
+<script>
+
+    add = document.getElementById('add_goods_count');
+    console.log(add)
+    add.onclick = function () {
+        console.log('add click')
+        count = document.getElementById('goods_count');
+        cost = document.getElementById('goods_cost');
+        var price = parseFloat(@Model.Price);
+        var inventory = parseInt(@Model.Inventory)
+        var countN = parseInt(count.innerText);
+        console.log(count.innerHTML)
+        console.log('count = ' + countN)
+        if (countN < inventory) {
+            countN++
+            var costN = multiply_A_B(countN, price);
+
+            count.innerText = countN
+            cost.innerText = costN
+        }
+    }
+
+    decase = document.getElementById('decase_goods_count');
+    console.log(decase)
+    decase.onclick = function () {
+        console.log('decase click')
+        count = document.getElementById('goods_count');
+        cost = document.getElementById('goods_cost');
+        var price = parseFloat(@Model.Price);
+        var countN = parseInt(count.innerText);
+        console.log(count.innerHTML)
+        console.log('count = ' + countN)
+        if (countN > 1) {
+            countN--
+            var costN = multiply_A_B(countN, price);
+
+            count.innerText = countN
+            cost.innerText = costN
+        }
+    }
+
+
+    cartIn = document.getElementById('in_cart');
+
+    cartIn.onclick = function () {
+        count = document.getElementById('goods_count');
+        window.location = '/Cart/Add?goods_id=@Model.Id&goods_count=' + count.innerText;
+    }
+
+</script>

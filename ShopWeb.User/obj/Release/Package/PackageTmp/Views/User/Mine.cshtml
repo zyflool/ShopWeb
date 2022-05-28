@@ -1,0 +1,125 @@
+﻿@model ShopWeb.Models.UserMineModel
+@using ShopWeb.Models;
+
+@{
+    ViewBag.Title = "个人中心";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string phone = (ViewData["UserMineModel"] as UserMineModel).Phone;
+    string showLabel = phone.Substring(0, 3) + "****" + phone.Substring(7, 4);
+}
+
+<script>
+    var orderTitleA = document.getElementById('title_order_action')
+    var goodsTitleA = document.getElementById('title_goods_action')
+    var cartTitleA = document.getElementById('title_cart_action')
+    var userTitleA = document.getElementById('title_user_action')
+
+    if (!userTitleA.classList.contains('title-selected')) {
+        userTitleA.classList.add('title-selected')
+        userTitleA.style.color = '#fff'
+    }
+
+    if (goodsTitleA.classList.contains('title-selected')) {
+        var index = goodsTitleA.classList.item('title-selected')
+        goodsTitleA.classList.remove(index)
+    }
+    if (cartTitleA.classList.contains('title-selected')) {
+        var index = cartTitleA.classList.item('title-selected')
+        cartTitleA.classList.remove(index)
+    }
+    if (orderTitleA.classList.contains('title-selected')) {
+        var index = orderTitleA.classList.item('title-selected')
+        orderTitleA.classList.remove(index)
+    }
+</script>
+
+<style>
+    th.mine-th {
+        line-height: 40px;
+        font-size: 20px;
+        font-weight: 600;
+        color: black;
+        padding: 5px;
+    }
+
+        th.mine-th label {
+            font-size: 18px;
+            font-weight: 400;
+            color: black;
+            padding: 5px;
+        }
+
+    a.mine-a {
+        font-size: 16px;
+        font-weight: 400;
+        color: darkblue;
+        padding: 5px;
+    }
+
+        a.mine-a:hover {
+            font-size: 16px;
+            font-weight: 700;
+            color: darkblue;
+            padding: 5px;
+            text-decoration: none;
+        }
+
+        a.mine-a:after {
+            font-size: 16px;
+            font-weight: 400;
+            color: darkblue;
+            padding: 5px;
+            text-decoration: none;
+        }
+
+    .logout {
+        display: block;
+        width: 100%;
+        text-align: center;
+        font-size: 22px;
+        font-weight: 500;
+        color: red;
+    }
+
+        .logout:hover {
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 600;
+            color: red;
+        }
+
+        .logout:after {
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 500;
+            color: red;
+        }
+</style>
+
+<h2>个人中心</h2>
+
+<div>
+    <table>
+        <tr>
+            <th class="mine-th">@Html.DisplayNameFor(model => model.UserName)&nbsp;@Html.Label((ViewData["UserMineModel"] as UserMineModel).UserName)</th>
+        </tr>
+
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Password)&nbsp;@Html.Label("******************")</th>
+            <td>@Html.ActionLink("修改密码", "EditPassword", new { controller = "User" }, new { @class = "mine-a" })</td>
+        </tr>
+
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Phone)&nbsp;@Html.Label(showLabel)</th>
+            <td>@Html.ActionLink("修改联系电话", "EditPhone", new { controller = "User" }, new { @class = "mine-a" })</td>
+        </tr>
+
+    </table>
+</div>
+
+@Html.ActionLink("退出登录", "Logout", new { }, new { @class = "logout" })

@@ -1,0 +1,13 @@
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.BLL\bin\Release\ShopWeb.BLL.dll
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.BLL\bin\Release\ShopWeb.BLL.pdb
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.BLL\bin\Release\ShopWeb.DAL.dll
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.BLL\bin\Release\ShopWeb.Models.dll
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.BLL\bin\Release\ShopWeb.Utils.dll
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.BLL\bin\Release\ShopWeb.DAL.pdb
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.BLL\bin\Release\ShopWeb.Models.pdb
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.BLL\bin\Release\ShopWeb.Utils.pdb
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.BLL\obj\Release\ShopWeb.BLL.csproj.AssemblyReference.cache
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.BLL\obj\Release\ShopWeb.BLL.csproj.CoreCompileInputs.cache
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.BLL\obj\Release\ShopWeb.BLL.csproj.CopyComplete
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.BLL\obj\Release\ShopWeb.BLL.dll
+C:\Users\86138\Desktop\code-repository\ShopWeb\ShopWeb.BLL\obj\Release\ShopWeb.BLL.pdb

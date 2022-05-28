@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "订单创建成功";
+    @*string orderId = ViewBag["order_id"].ToString();*@
+    string orderId = ViewData["order"].ToString();
+}
+<script>
+    var orderTitleA = document.getElementById('title_order_action')
+    var goodsTitleA = document.getElementById('title_goods_action')
+    var cartTitleA = document.getElementById('title_cart_action')
+    var userTitleA = document.getElementById('title_order_action')
+
+    orderTitleA.classList.add('title-selected')
+    orderTitleA.style.color = '#fff'
+
+    if (goodsTitleA.classList.contains('title-selected')) {
+        var index = goodsTitleA.classList.item('title-selected')
+        goodsTitleA.classList.remove(index)
+    }
+    if (cartTitleA.classList.contains('title-selected')) {
+        var index = cartTitleA.classList.item('title-selected')
+        cartTitleA.classList.remove(index)
+    }
+    if (userTitleA.classList.contains('title-selected')) {
+        var index = userTitleA.classList.item('title-selected')
+        userTitleA.classList.remove(index)
+    }
+</script>
+
+<h2>订单创建成功，请在五分钟内进行付款，超时订单将自动取消</h2>
+<a class="btn btn-default" href="Pay?order_id=@orderId">去付款 &gt;&gt;&gt;</a>
